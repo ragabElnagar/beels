@@ -1,6 +1,28 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+import { DirectionSettingsContextProvider, LayoutDirection, ThemeConfig } from '@/theme/src';
+import { AppProps } from 'next/app';
+import { useEffect, useState } from 'react';
+
+function App({ Component, pageProps }: AppProps) {
+  const [render, setRender] = useState(false);
+
+  useEffect(() => {
+    setRender(true);
+  }, []);
+ 
+  return (
+    <>
+      {render && (
+        <DirectionSettingsContextProvider>
+            <ThemeConfig>
+              <LayoutDirection>
+                <Component {...pageProps} />
+              </LayoutDirection>
+            </ThemeConfig>
+        </DirectionSettingsContextProvider>
+      )}
+    </>
+  );
 }
+
+export default App;
